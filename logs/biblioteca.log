@@ -120,6 +120,7 @@
 2025-11-28T14:30:10.290-05:00  INFO 21608 --- [bdv1] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-11-28T14:30:10.333-05:00  INFO 21608 --- [bdv1] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-11-28T14:30:10.456-05:00  INFO 21608 --- [bdv1] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+<<<<<<< HEAD
 2025-11-30T11:33:29.163-05:00  INFO 17056 --- [bdv1] [main] com.example.bdv1.Bdv1Application         : Starting Bdv1Application using Java 21.0.9 with PID 17056 (C:\Users\USER\Downloads\BACKEND-FINAL-LP2-PLASENCIA-main\BACKEND-FINAL-LP2-PLASENCIA-main\target\classes started by USER in C:\Users\USER\Downloads\BACKEND-FINAL-LP2-PLASENCIA-main\BACKEND-FINAL-LP2-PLASENCIA-main)
 2025-11-30T11:33:29.167-05:00  INFO 17056 --- [bdv1] [main] com.example.bdv1.Bdv1Application         : No active profile set, falling back to 1 default profile: "default"
 2025-11-30T11:33:31.019-05:00  INFO 17056 --- [bdv1] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
@@ -4522,3 +4523,5 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00942: la tabla o vista no e
 2025-11-30T13:52:47.937-05:00  INFO 4768 --- [bdv1] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-11-30T13:52:47.939-05:00  INFO 4768 --- [bdv1] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-11-30T13:52:47.991-05:00  INFO 4768 --- [bdv1] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+=======
+>>>>>>> 742e11b43020351c345164e543bc50e961461dec

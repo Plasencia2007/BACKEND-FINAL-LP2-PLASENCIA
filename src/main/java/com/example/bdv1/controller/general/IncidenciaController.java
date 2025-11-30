@@ -2,12 +2,10 @@ package com.example.bdv1.controller.general;
 
 import com.example.bdv1.dto.IncidenciaDTO;
 import com.example.bdv1.service.service.IncidenciaService;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,13 +19,10 @@ import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/incidencias")
 public class IncidenciaController {
-
     private final IncidenciaService incidenciaService;
-
     public IncidenciaController(IncidenciaService incidenciaService) {
         this.incidenciaService = incidenciaService;
     }
-
     @PreAuthorize("hasAuthority('GET_ALL_INCIDENCIAS')")
     @GetMapping
     public ResponseEntity<List<IncidenciaDTO>> listarIncidencias() {
@@ -64,8 +59,6 @@ public class IncidenciaController {
         return ResponseEntity.noContent().build();
     }
 
-    // ✅ CORREGIDO: Devuelve texto plano (no JSON)
-    @PostMapping(value = "/upload", produces = MediaType.TEXT_PLAIN_VALUE)
     @PreAuthorize("hasAuthority('CREATE_INCIDENCIAS') or hasAuthority('UPDATE_INCIDENCIAS')")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
@@ -86,9 +79,6 @@ public class IncidenciaController {
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
             String fileUrl = "/api/v1/uploads/" + uniqueFilename;
-            return ResponseEntity.ok()
-                    .contentType(MediaType.TEXT_PLAIN)
-                    .body(fileUrl);
 
         } catch (IOException e) {
             e.printStackTrace();
