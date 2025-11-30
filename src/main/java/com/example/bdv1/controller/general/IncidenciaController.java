@@ -4,9 +4,18 @@ import com.example.bdv1.dto.IncidenciaDTO;
 import com.example.bdv1.service.service.IncidenciaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile; // ✅ Importa esto
 
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -50,5 +59,38 @@ public class IncidenciaController {
     public ResponseEntity<Void> eliminarIncidencia(@PathVariable Long id) {
         incidenciaService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/upload")
+    @PreAuthorize("hasAuthority('CREATE_INCIDENCIAS') or hasAuthority('UPDATE_INCIDENCIAS')")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest().body("Archivo vacío");
+            }
+
+            // Generar nombre único
+            String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String uniqueFilename = UUID.randomUUID().toString() + extension;
+
+            // Crear directorio si no existe
+            Path uploadPath = Paths.get("uploads");
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Guardar archivo
+            Path filePath = uploadPath.resolve(uniqueFilename);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // Devolver URL pública
+            String fileUrl = "/api/v1/uploads/" + uniqueFilename;
+            return ResponseEntity.ok(fileUrl);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error al subir archivo");
+        }
     }
 }
